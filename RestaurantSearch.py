@@ -1,5 +1,5 @@
 import json
-
+import request
 
 print "Hello! This program will help you find the type of restaurant you want right and save the search for later use. You have three options, type N to create a new search, type E to use a stored search or type Q to quit.    "
 
