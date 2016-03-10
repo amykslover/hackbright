@@ -1,2 +1,11 @@
-mexican,3,4
-chinese,2,4
+Mexican,cheap,Hayes Valley
+Mexican,cheap,Hayes Valley
+Mexican,cheap,Hayes Valley
+Mexican,cheap,Hayes Valley
+Mexican,cheap,Hayes Valley
+Mexican,cheap,Hayes Valley
+Mexican,cheap,Hayes Valley
+Mexican,cheap,Hayes Valley
+Mexican,cheap,Hayes Valley
+Mexican,cheap,Hayes Valley
+Mexican,cheap,Hayes Valley
