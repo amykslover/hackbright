@@ -1,11 +1,3 @@
-Mexican,cheap,Hayes Valley
-Mexican,cheap,Hayes Valley
-Mexican,cheap,Hayes Valley
-Mexican,cheap,Hayes Valley
-Mexican,cheap,Hayes Valley
-Mexican,cheap,Hayes Valley
-Mexican,cheap,Hayes Valley
-Mexican,cheap,Hayes Valley
-Mexican,cheap,Hayes Valley
-Mexican,cheap,Hayes Valley
-Mexican,cheap,Hayes Valley
+1,Mexican,cheap,Nob Hill
+2,Burmese,moderate,Inner Richmond
+3,Chinese,moderate,Hayes Valley

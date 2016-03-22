@@ -1,8 +1,10 @@
 import json
 import urllib2
 import csv
+
 from yelp.client import Client
 from yelp.oauth1_authenticator import Oauth1Authenticator
+
 
 with open("saved_search.txt")as saved_search:
 	food_file = saved_search.read()
@@ -23,24 +25,23 @@ COMMAND_CONTINUE = 'c'
 COMMAND_SAVE_EXECUTE = 's'
 COMMAND_QUIT = 'q'
 
-command_question_dict = {COMMAND_CONTINUE: "continue entering info", COMMAND_SAVE_EXECUTE: "save search and execute", COMMAND_QUIT: "quit without saving"}
+command_question_dict = {COMMAND_CONTINUE: "Continue entering search terms?", COMMAND_SAVE_EXECUTE: "Save search and execute search?", COMMAND_QUIT: "Quit without saving?"}
 
 def prompt_command():
 	for command,prompt in command_question_dict.items():
-		print "To", prompt + ', please press', command + "."
+		print prompt , 'Press', command + "."
 	prompt_response = raw_input()
 	return prompt_response
 
 def save_search():
+	with open("saved_search.txt")as saved_search:
+		last_index = saved_search.readlines()
+		n = [int(last_index[-1][0])+1]
+
 	with open("saved_search.txt",'a') as saved_search:
 		sv_list = csv.writer(saved_search)
-		sv_list.writerow(new_list)
-	#with open("saved_search.txt")as saved_search:
-	#	print saved_search.read()
-	# with open("saved_search.txt")as saved_search:
-	# 	lineList = saved_search.readlines()
-	# 	print "The last line is: "
-	# 	print lineList[-1][0]
+		sv_list.writerow(n + new_list)
+
 
 def api_search(api_list):
 	with open('config_secret.json') as cred:
@@ -53,8 +54,9 @@ def api_search(api_list):
 	    'term': api_list[1].lower(),
 	    'limit': 5
 	    }
+	response = client.search(api_list[2], **params)
 
-	return response = client.search(api_list[2], **params)
+	return response
 
 	
 
@@ -65,9 +67,16 @@ response = raw_input()
 if response == "q":
 	print "Goodbye!"
 	exit
-elif response == "e": 
-	print food_file
+
+elif response == "e":
+	with open("saved_search.txt")as saved_search:
+		food_file = saved_search.readlines()
+		print food_file #need to format the displayed list in a more attractive manner
 	saved_request = raw_input("Which saved search do you want to execute? Type the number.")
+	exist_list = food_file[int(saved_request)-1]
+	print exist_list
+
+	api_search(exist_list)
 
 elif response == "n":
 	food_question_count = len(food_question_list) - 1
@@ -87,16 +96,12 @@ elif response == "n":
 			else:
 				print "error"
 	save_search()
-
 api_search(new_list)
 
+print response.businesses[0].name
+print response.businesses[1].name
+print response.businesses[2].name
+print response.businesses[3].name
+print response.businesses[4].name
 
-print response.businesses[0].name, "has a", response.businesses[0].rating, "rating and is located at", response.businesses[0].location.display_address[0], "between", response.businesses[0].location.cross_streets
-print response.businesses[1].name, "has a", response.businesses[1].rating, "rating and is located at", response.businesses[1].location.display_address[0], "between", response.businesses[1].location.cross_streets
-print response.businesses[2].name, "has a", response.businesses[2].rating, "rating and is located at", response.businesses[2].location.display_address[0], "between", response.businesses[2].location.cross_streets
-print response.businesses[3].name, "has a", response.businesses[3].rating, "rating and is located at", response.businesses[3].location.display_address[0], "between", response.businesses[3].location.cross_streets
-print response.businesses[4].name, "has a", response.businesses[4].rating, "rating and is located at", response.businesses[4].location.display_address[0], "between", response.businesses[4].location.cross_streets
-
-# category_filter = ""
-# radius_filter = 
-# limit = 10
+# , "has a", response.businesses[0].rating, "rating and is located at", response.businesses[0].location.display_address[0], "between", response.businesses[0].location.cross_streets
