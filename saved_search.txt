@@ -1,3 +1,5 @@
 1,Mexican,cheap,Nob Hill
 2,Burmese,moderate,Inner Richmond
 3,Chinese,moderate,Hayes Valley
+4,Pizza,cheap,Financial District
+5,Taiwanese,moderate,SoMa

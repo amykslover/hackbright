@@ -2,6 +2,7 @@ import json
 import urllib2
 import csv
 
+from tabulate import tabulate
 from yelp.client import Client
 from yelp.oauth1_authenticator import Oauth1Authenticator
 
@@ -55,30 +56,42 @@ def api_search(api_list):
 	    'limit': 5
 	    }
 	response = client.search(api_list[2], **params)
-
 	return response
-
 	
+
+#Program starts here:
 
 print "Hello! This program will help you find the type of restaurant you want right and save the search for later use. You have three options, type N to create a new search, type E to use a stored search or type Q to quit. "
 
 
-response = raw_input()
-if response == "q":
+user_response = raw_input()
+if user_response == "q":
 	print "Goodbye!"
 	exit
 
-elif response == "e":
-	with open("saved_search.txt")as saved_search:
-		food_file = saved_search.readlines()
-		print food_file #need to format the displayed list in a more attractive manner
+elif user_response == "e":
+
+	temp_list = []
+
+	with open("saved_search.txt", 'r') as f:
+		food_file = csv.reader(f, delimiter=',', quoting=csv.QUOTE_NONE)
+		for row in food_file:
+			temp_list.append(row)
+			print tabulate([row])
+	
 	saved_request = raw_input("Which saved search do you want to execute? Type the number.")
-	exist_list = food_file[int(saved_request)-1]
-	print exist_list
+	exist_list = temp_list[int(saved_request)-1][1:]
+	print tabulate([exist_list], headers=['Cuisine', 'Price', 'Location' ], tablefmt='orgtbl')
+	response = api_search(exist_list)
+# Returns results of API call
 
-	api_search(exist_list)
+	print response.businesses[0].name, response.businesses[0].rating, response.businesses[0].location.display_address[0], "between", response.businesses[0].location.cross_streets
+	print response.businesses[1].name
+	print response.businesses[2].name
+	print response.businesses[3].name
+	print response.businesses[4].name
 
-elif response == "n":
+elif user_response == "n":
 	food_question_count = len(food_question_list) - 1
 	for i, item in enumerate(food_question_list):
 		new_item = raw_input(item)
@@ -96,12 +109,15 @@ elif response == "n":
 			else:
 				print "error"
 	save_search()
-api_search(new_list)
+	print tabulate([new_list], headers=['Cuisine', 'Price', 'Location' ], tablefmt='orgtbl')
+	response = api_search(new_list)
 
-print response.businesses[0].name
-print response.businesses[1].name
-print response.businesses[2].name
-print response.businesses[3].name
-print response.businesses[4].name
+# Returns results of API call
+	print response.businesses[0].name
+	print response.businesses[1].name
+	print response.businesses[2].name
+	print response.businesses[3].name
+	print response.businesses[4].name
 
-# , "has a", response.businesses[0].rating, "rating and is located at", response.businesses[0].location.display_address[0], "between", response.businesses[0].location.cross_streets
+# businesses[0].rating
+# response.businesses[0].location.display_address[0], "between", response.businesses[0].location.cross_streets

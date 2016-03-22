@@ -19,8 +19,8 @@ result = client.search('San Francisco', **params)
 print result
 
 
-# print result.businesses[-2].name
-# print result.businesses[-2].rating
-# print result.businesses[-2].categories
-# print result.businesses[-2].location.display_address
-# print result.businesses[-2].location.cross_streets
+print result.businesses[-2].name
+print result.businesses[-2].rating
+print result.businesses[-2].categories
+print result.businesses[-2].location.display_address
+print result.businesses[-2].location.cross_streets
